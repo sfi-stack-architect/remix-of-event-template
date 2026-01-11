@@ -1,111 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Privacy-First Analytics System - Design System
-   Dark, terminal-inspired aesthetic for system operators
-*/
-
+/* Enterprise Dark Mode Pro Theme - Premium Analytics Design System */
 
 @layer base {
   :root {
-    /* Core palette - Dark terminal theme */
-    --background: 220 20% 4%;
-    --foreground: 210 20% 90%;
+    /* Light mode - Clean enterprise style */
+    --background: 220 14% 96%;
+    --foreground: 224 71% 4%;
 
-    --card: 220 18% 7%;
-    --card-foreground: 210 20% 90%;
+    --card: 0 0% 100%;
+    --card-foreground: 224 71% 4%;
 
-    --popover: 220 18% 7%;
-    --popover-foreground: 210 20% 90%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71% 4%;
 
-    --primary: 142 70% 45%;
-    --primary-foreground: 220 20% 4%;
+    --primary: 221 83% 53%;
+    --primary-foreground: 210 40% 98%;
 
-    --secondary: 220 15% 12%;
-    --secondary-foreground: 210 20% 80%;
+    --secondary: 220 14% 92%;
+    --secondary-foreground: 224 71% 4%;
 
-    --muted: 220 15% 15%;
-    --muted-foreground: 210 15% 55%;
+    --muted: 220 14% 92%;
+    --muted-foreground: 220 9% 46%;
 
-    --accent: 38 92% 50%;
-    --accent-foreground: 220 20% 4%;
+    --accent: 221 83% 53%;
+    --accent-foreground: 210 40% 98%;
 
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 210 20% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
 
-    --border: 220 15% 18%;
-    --input: 220 15% 18%;
-    --ring: 142 70% 45%;
+    --border: 220 13% 88%;
+    --input: 220 13% 88%;
+    --ring: 221 83% 53%;
 
-    --radius: 0.375rem;
+    --radius: 0.5rem;
 
-    /* Status colors */
-    --success: 142 70% 45%;
-    --warning: 38 92% 50%;
-    --error: 0 72% 51%;
-    --info: 199 89% 48%;
+    /* Enterprise signal colors - Light */
+    --signal-nominal: 142 76% 36%;
+    --signal-warning: 38 92% 50%;
+    --signal-critical: 0 84% 60%;
+    --signal-info: 221 83% 53%;
 
-    /* Chart colors */
-    --chart-1: 142 70% 45%;
-    --chart-2: 199 89% 48%;
+    /* Chart colors - Light */
+    --chart-1: 221 83% 53%;
+    --chart-2: 142 76% 36%;
     --chart-3: 38 92% 50%;
     --chart-4: 280 65% 60%;
-    --chart-5: 0 72% 51%;
+    --chart-5: 189 94% 43%;
 
-    /* Terminal effects */
-    --glow-primary: 0 0 20px hsl(142 70% 45% / 0.3);
-    --glow-accent: 0 0 20px hsl(38 92% 50% / 0.3);
-    --scanline-opacity: 0.03;
-
-    --sidebar-background: 220 20% 4%;
-    --sidebar-foreground: 210 20% 90%;
-    --sidebar-primary: 142 70% 45%;
-    --sidebar-primary-foreground: 220 20% 4%;
-    --sidebar-accent: 220 15% 12%;
-    --sidebar-accent-foreground: 210 20% 80%;
-    --sidebar-border: 220 15% 18%;
-    --sidebar-ring: 142 70% 45%;
+    /* Sidebar - Light */
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 224 71% 4%;
+    --sidebar-primary: 221 83% 53%;
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 220 14% 96%;
+    --sidebar-accent-foreground: 224 71% 4%;
+    --sidebar-border: 220 13% 88%;
+    --sidebar-ring: 221 83% 53%;
   }
 
   .dark {
-    --background: 220 20% 4%;
-    --foreground: 210 20% 90%;
-    --card: 220 18% 7%;
-    --card-foreground: 210 20% 90%;
-    --popover: 220 18% 7%;
-    --popover-foreground: 210 20% 90%;
-    --primary: 142 70% 45%;
-    --primary-foreground: 220 20% 4%;
-    --secondary: 220 15% 12%;
-    --secondary-foreground: 210 20% 80%;
-    --muted: 220 15% 15%;
-    --muted-foreground: 210 15% 55%;
-    --accent: 38 92% 50%;
-    --accent-foreground: 220 20% 4%;
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 210 20% 98%;
-    --border: 220 15% 18%;
-    --input: 220 15% 18%;
-    --ring: 142 70% 45%;
-    --sidebar-background: 220 20% 4%;
-    --sidebar-foreground: 210 20% 90%;
-    --sidebar-primary: 142 70% 45%;
-    --sidebar-primary-foreground: 220 20% 4%;
-    --sidebar-accent: 220 15% 12%;
-    --sidebar-accent-foreground: 210 20% 80%;
-    --sidebar-border: 220 15% 18%;
-    --sidebar-ring: 142 70% 45%;
-  }
+    /* Dark Mode Pro - Premium Enterprise Theme */
+    --background: 224 71% 4%;
+    --foreground: 210 40% 98%;
 
-  @layer base {
-    * {
-      @apply border-border;
-    }
+    --card: 224 71% 6%;
+    --card-foreground: 210 40% 98%;
 
-    body {
-      @apply bg-background text-foreground;
-    }
+    --popover: 224 71% 6%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 217 91% 60%;
+    --primary-foreground: 222 47% 11%;
+
+    --secondary: 217 33% 12%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217 33% 12%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 217 33% 17%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 217 91% 60%;
+
+    /* Enterprise signal colors - Dark Pro */
+    --signal-nominal: 142 70% 45%;
+    --signal-warning: 45 93% 47%;
+    --signal-critical: 0 72% 51%;
+    --signal-info: 217 91% 60%;
+
+    /* Chart colors - Dark Pro */
+    --chart-1: 217 91% 60%;
+    --chart-2: 142 70% 45%;
+    --chart-3: 45 93% 47%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 189 94% 50%;
+
+    /* Sidebar - Dark Pro */
+    --sidebar-background: 224 71% 4%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 217 91% 60%;
+    --sidebar-primary-foreground: 222 47% 11%;
+    --sidebar-accent: 217 33% 12%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 217 33% 17%;
+    --sidebar-ring: 217 91% 60%;
   }
 }
 
@@ -115,6 +124,145 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  /* Scrollbar styling for dark mode */
+  .dark ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .dark ::-webkit-scrollbar-track {
+    @apply bg-secondary/50;
+  }
+
+  .dark ::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/30 rounded-full;
+  }
+
+  .dark ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/50;
+  }
+}
+
+@layer components {
+  /* Enterprise Grid Pattern */
+  .enterprise-grid {
+    background-image: 
+      linear-gradient(to right, hsl(var(--border) / 0.3) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--border) / 0.3) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* Glow effects for dark mode */
+  .dark .glow-primary {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+  }
+
+  .dark .glow-nominal {
+    box-shadow: 0 0 20px hsl(var(--signal-nominal) / 0.3);
+  }
+
+  .dark .glow-warning {
+    box-shadow: 0 0 20px hsl(var(--signal-warning) / 0.3);
+  }
+
+  .dark .glow-critical {
+    box-shadow: 0 0 20px hsl(var(--signal-critical) / 0.3);
+  }
+
+  /* Enterprise card hover effects */
+  .enterprise-card {
+    @apply transition-all duration-300;
+  }
+
+  .dark .enterprise-card:hover {
+    @apply border-primary/50;
+    box-shadow: 0 0 30px hsl(var(--primary) / 0.15);
+  }
+
+  /* Pulse animation for live indicators */
+  @keyframes pulse-glow {
+    0%, 100% {
+      opacity: 1;
+      box-shadow: 0 0 8px hsl(var(--signal-nominal) / 0.6);
+    }
+    50% {
+      opacity: 0.7;
+      box-shadow: 0 0 16px hsl(var(--signal-nominal) / 0.4);
+    }
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  /* Data visualization gradients */
+  .gradient-primary {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--chart-5)) 100%);
+  }
+
+  .gradient-nominal {
+    background: linear-gradient(135deg, hsl(var(--signal-nominal)) 0%, hsl(142 70% 55%) 100%);
+  }
+
+  .gradient-warning {
+    background: linear-gradient(135deg, hsl(var(--signal-warning)) 0%, hsl(25 93% 47%) 100%);
+  }
+
+  .gradient-critical {
+    background: linear-gradient(135deg, hsl(var(--signal-critical)) 0%, hsl(330 72% 51%) 100%);
+  }
+
+  /* Widget container styling */
+  .widget-container {
+    @apply bg-card border border-border rounded-lg overflow-hidden;
+  }
+
+  .dark .widget-container {
+    background: linear-gradient(180deg, hsl(var(--card)) 0%, hsl(224 71% 5%) 100%);
+  }
+
+  /* Metric highlight */
+  .metric-highlight {
+    @apply relative overflow-hidden;
+  }
+
+  .metric-highlight::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent;
+  }
+
+  /* Executive header styling */
+  .executive-header {
+    @apply border-b border-border;
+    background: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--card)) 100%);
+  }
+
+  .dark .executive-header {
+    background: linear-gradient(180deg, hsl(224 71% 6%) 0%, hsl(224 71% 4%) 100%);
+  }
+}
+
+@layer utilities {
+  /* Text gradient utility */
+  .text-gradient-primary {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--chart-5)) 100%);
+  }
+
+  /* Animation delay utilities */
+  .animation-delay-150 {
+    animation-delay: 150ms;
+  }
+  
+  .animation-delay-300 {
+    animation-delay: 300ms;
+  }
+  
+  .animation-delay-500 {
+    animation-delay: 500ms;
   }
 }

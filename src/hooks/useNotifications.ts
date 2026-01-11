@@ -5,12 +5,13 @@ import { useAuth } from "@/contexts/AuthContext";
 
 export interface Notification {
   id: string;
-  user_id: string;
   title: string;
-  message: string;
-  type: "info" | "warning" | "error" | "success";
+  description: string;
+  insight_type: "trend" | "anomaly" | "recommendation" | "prediction";
+  severity: "info" | "warning" | "critical" | null;
   is_read: boolean;
-  action_url: string | null;
+  is_dismissed: boolean;
+  data: Record<string, unknown>;
   created_at: string;
 }
 
@@ -23,10 +24,11 @@ export function useNotifications() {
     queryFn: async () => {
       if (!user) return [];
 
+      // Use ai_insights as notifications source for enterprise analytics
       const { data, error } = await supabase
-        .from("notifications")
+        .from("ai_insights" as never)
         .select("*")
-        .eq("user_id", user.id)
+        .eq("is_dismissed", false)
         .order("created_at", { ascending: false })
         .limit(50);
 
@@ -47,8 +49,7 @@ export function useNotifications() {
         {
           event: "INSERT",
           schema: "public",
-          table: "notifications",
-          filter: `user_id=eq.${user.id}`,
+          table: "ai_insights",
         },
         () => {
           queryClient.invalidateQueries({ queryKey: ["notifications"] });
@@ -75,8 +76,8 @@ export function useMarkAsRead() {
   return useMutation({
     mutationFn: async (notificationId: string) => {
       const { error } = await supabase
-        .from("notifications")
-        .update({ is_read: true })
+        .from("ai_insights" as never)
+        .update({ is_read: true } as never)
         .eq("id", notificationId);
 
       if (error) throw error;
@@ -96,9 +97,8 @@ export function useMarkAllAsRead() {
       if (!user) throw new Error("Not authenticated");
 
       const { error } = await supabase
-        .from("notifications")
-        .update({ is_read: true })
-        .eq("user_id", user.id)
+        .from("ai_insights" as never)
+        .update({ is_read: true } as never)
         .eq("is_read", false);
 
       if (error) throw error;
@@ -109,14 +109,14 @@ export function useMarkAllAsRead() {
   });
 }
 
-export function useDeleteNotification() {
+export function useDismissNotification() {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async (notificationId: string) => {
       const { error } = await supabase
-        .from("notifications")
-        .delete()
+        .from("ai_insights" as never)
+        .update({ is_dismissed: true } as never)
         .eq("id", notificationId);
 
       if (error) throw error;

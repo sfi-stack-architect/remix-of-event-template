@@ -110,7 +110,7 @@ export default function Index() {
       logAudit.mutate({
         action: "query_submitted",
         resourceType: "strategic_analysis",
-        details: { query_length: queryInput.length },
+        newValues: { query_length: queryInput.length },
       });
     }
 
