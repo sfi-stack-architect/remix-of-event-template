@@ -14,6 +14,262 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_insights: {
+        Row: {
+          created_at: string
+          data: Json | null
+          description: string
+          id: string
+          insight_type: string
+          is_dismissed: boolean | null
+          is_read: boolean | null
+          severity: string | null
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          data?: Json | null
+          description: string
+          id?: string
+          insight_type: string
+          is_dismissed?: boolean | null
+          is_read?: boolean | null
+          severity?: string | null
+          title: string
+        }
+        Update: {
+          created_at?: string
+          data?: Json | null
+          description?: string
+          id?: string
+          insight_type?: string
+          is_dismissed?: boolean | null
+          is_read?: boolean | null
+          severity?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
+      alert_history: {
+        Row: {
+          acknowledged_by: string | null
+          alert_id: string | null
+          id: string
+          metric_value: number
+          notes: string | null
+          resolved_at: string | null
+          triggered_at: string
+        }
+        Insert: {
+          acknowledged_by?: string | null
+          alert_id?: string | null
+          id?: string
+          metric_value: number
+          notes?: string | null
+          resolved_at?: string | null
+          triggered_at?: string
+        }
+        Update: {
+          acknowledged_by?: string | null
+          alert_id?: string | null
+          id?: string
+          metric_value?: number
+          notes?: string | null
+          resolved_at?: string | null
+          triggered_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "alert_history_alert_id_fkey"
+            columns: ["alert_id"]
+            isOneToOne: false
+            referencedRelation: "alerts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      alerts: {
+        Row: {
+          condition: string
+          created_at: string
+          id: string
+          is_active: boolean
+          last_triggered_at: string | null
+          metric_type: string
+          name: string
+          notification_channels: Json | null
+          threshold: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          condition: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          last_triggered_at?: string | null
+          metric_type: string
+          name: string
+          notification_channels?: Json | null
+          threshold: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          condition?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          last_triggered_at?: string | null
+          metric_type?: string
+          name?: string
+          notification_channels?: Json | null
+          threshold?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      analytics_events: {
+        Row: {
+          created_at: string
+          event_type: string
+          id: string
+          page_path: string | null
+          payload: Json | null
+          session_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          event_type: string
+          id?: string
+          page_path?: string | null
+          payload?: Json | null
+          session_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          event_type?: string
+          id?: string
+          page_path?: string | null
+          payload?: Json | null
+          session_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "analytics_events_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "analytics_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      analytics_sessions: {
+        Row: {
+          anonymized_token: string
+          created_at: string
+          device_type: string | null
+          ended_at: string | null
+          entry_path: string | null
+          id: string
+          referrer_type: string | null
+          started_at: string
+          user_agent_hash: string | null
+        }
+        Insert: {
+          anonymized_token: string
+          created_at?: string
+          device_type?: string | null
+          ended_at?: string | null
+          entry_path?: string | null
+          id?: string
+          referrer_type?: string | null
+          started_at?: string
+          user_agent_hash?: string | null
+        }
+        Update: {
+          anonymized_token?: string
+          created_at?: string
+          device_type?: string | null
+          ended_at?: string | null
+          entry_path?: string | null
+          id?: string
+          referrer_type?: string | null
+          started_at?: string
+          user_agent_hash?: string | null
+        }
+        Relationships: []
+      }
+      audit_logs: {
+        Row: {
+          action: string
+          created_at: string
+          id: string
+          ip_address: unknown
+          new_values: Json | null
+          old_values: Json | null
+          resource_id: string | null
+          resource_type: string
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          id?: string
+          ip_address?: unknown
+          new_values?: Json | null
+          old_values?: Json | null
+          resource_id?: string | null
+          resource_type: string
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          id?: string
+          ip_address?: unknown
+          new_values?: Json | null
+          old_values?: Json | null
+          resource_id?: string | null
+          resource_type?: string
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      dashboard_configs: {
+        Row: {
+          created_at: string
+          id: string
+          is_default: boolean | null
+          layout: Json
+          name: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_default?: boolean | null
+          layout?: Json
+          name?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_default?: boolean | null
+          layout?: Json
+          name?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       event_registrations: {
         Row: {
           event_id: string
@@ -101,6 +357,45 @@ export type Database = {
           created_at?: string
           display_name?: string | null
           id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      reports: {
+        Row: {
+          config: Json
+          created_at: string
+          description: string | null
+          id: string
+          is_scheduled: boolean | null
+          last_run_at: string | null
+          name: string
+          schedule_cron: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          config?: Json
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_scheduled?: boolean | null
+          last_run_at?: string | null
+          name: string
+          schedule_cron?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          config?: Json
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_scheduled?: boolean | null
+          last_run_at?: string | null
+          name?: string
+          schedule_cron?: string | null
           updated_at?: string
           user_id?: string
         }

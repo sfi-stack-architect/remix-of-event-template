@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Bell, Check, CheckCheck, Trash2, X } from "lucide-react";
+import { Bell, Check, CheckCheck, Trash2, X, TrendingUp, AlertTriangle, Lightbulb, Activity } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -13,50 +13,55 @@ import {
   useUnreadCount,
   useMarkAsRead,
   useMarkAllAsRead,
-  useDeleteNotification,
+  useDismissNotification,
   Notification,
 } from "@/hooks/useNotifications";
 import { formatDistanceToNow } from "date-fns";
 
-const typeStyles: Record<string, string> = {
+const severityStyles: Record<string, string> = {
   info: "border-l-primary",
-  warning: "border-l-signal-warning",
-  error: "border-l-signal-critical",
-  success: "border-l-signal-nominal",
+  warning: "border-l-amber-500",
+  critical: "border-l-destructive",
 };
 
-const typeIcons: Record<string, string> = {
-  info: "bg-primary/10 text-primary",
-  warning: "bg-signal-warning/10 text-signal-warning",
-  error: "bg-signal-critical/10 text-signal-critical",
-  success: "bg-signal-nominal/10 text-signal-nominal",
+const insightIcons: Record<string, React.ReactNode> = {
+  trend: <TrendingUp className="h-3.5 w-3.5" />,
+  anomaly: <AlertTriangle className="h-3.5 w-3.5" />,
+  recommendation: <Lightbulb className="h-3.5 w-3.5" />,
+  prediction: <Activity className="h-3.5 w-3.5" />,
 };
 
 function NotificationItem({ notification }: { notification: Notification }) {
   const markAsRead = useMarkAsRead();
-  const deleteNotification = useDeleteNotification();
+  const dismissNotification = useDismissNotification();
+
+  const severity = notification.severity || "info";
 
   return (
     <div
       className={cn(
         "p-3 border-l-2 bg-card/50 hover:bg-card transition-colors relative group",
-        typeStyles[notification.type] || typeStyles.info,
+        severityStyles[severity] || severityStyles.info,
         !notification.is_read && "bg-primary/5"
       )}
     >
       <div className="flex items-start gap-3">
         <div
           className={cn(
-            "w-2 h-2 rounded-full mt-2 flex-shrink-0",
-            notification.is_read ? "bg-muted" : typeIcons[notification.type]?.split(" ")[0] || "bg-primary"
+            "w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0",
+            severity === "critical" && "bg-destructive/10 text-destructive",
+            severity === "warning" && "bg-amber-500/10 text-amber-500",
+            severity === "info" && "bg-primary/10 text-primary"
           )}
-        />
+        >
+          {insightIcons[notification.insight_type] || insightIcons.trend}
+        </div>
         <div className="flex-1 min-w-0">
           <p className="font-mono text-xs font-medium text-foreground truncate">
             {notification.title}
           </p>
           <p className="font-mono text-[10px] text-muted-foreground mt-0.5 line-clamp-2">
-            {notification.message}
+            {notification.description}
           </p>
           <p className="font-mono text-[10px] text-muted-foreground/50 mt-1">
             {formatDistanceToNow(new Date(notification.created_at), { addSuffix: true })}
@@ -76,8 +81,8 @@ function NotificationItem({ notification }: { notification: Notification }) {
           <Button
             variant="ghost"
             size="icon"
-            className="h-6 w-6 text-signal-critical hover:text-signal-critical"
-            onClick={() => deleteNotification.mutate(notification.id)}
+            className="h-6 w-6 text-destructive hover:text-destructive"
+            onClick={() => dismissNotification.mutate(notification.id)}
           >
             <Trash2 className="h-3 w-3" />
           </Button>
@@ -103,7 +108,7 @@ export function NotificationBell() {
         >
           <Bell className="h-4 w-4" />
           {unreadCount > 0 && (
-            <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-signal-critical text-[10px] font-mono flex items-center justify-center text-white">
+            <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-destructive text-[10px] font-mono flex items-center justify-center text-destructive-foreground">
               {unreadCount > 9 ? "9+" : unreadCount}
             </span>
           )}
@@ -115,7 +120,7 @@ export function NotificationBell() {
       >
         <div className="flex items-center justify-between p-3 border-b border-border">
           <h3 className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-            Notifications
+            AI Insights
           </h3>
           <div className="flex items-center gap-1">
             {unreadCount > 0 && (
@@ -155,7 +160,7 @@ export function NotificationBell() {
             <div className="p-8 text-center">
               <Bell className="h-8 w-8 mx-auto text-muted-foreground/30 mb-2" />
               <p className="font-mono text-xs text-muted-foreground">
-                No notifications
+                No AI insights yet
               </p>
             </div>
           )}

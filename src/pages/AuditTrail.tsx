@@ -27,7 +27,7 @@ const actionColors: Record<string, string> = {
 };
 
 function AuditLogItem({ log }: { log: AuditLogEntry }) {
-  const details = typeof log.details === 'object' && log.details !== null ? log.details : {};
+  const details = typeof log.new_values === 'object' && log.new_values !== null ? log.new_values : {};
   
   return (
     <div className="p-4 border-b border-border hover:bg-card/50 transition-colors">

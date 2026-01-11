@@ -10,7 +10,8 @@ export interface AuditLogEntry {
   action: string;
   resource_type: string;
   resource_id: string | null;
-  details: Json;
+  old_values: Json | null;
+  new_values: Json | null;
   ip_address: string | null;
   user_agent: string | null;
   created_at: string;
@@ -23,7 +24,7 @@ export function useAuditLogs(limit = 100) {
     queryKey: ["audit-logs", limit],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("audit_logs")
+        .from("audit_logs" as never)
         .select("*")
         .order("created_at", { ascending: false })
         .limit(limit);
@@ -43,23 +44,26 @@ export function useLogAudit() {
       action,
       resourceType,
       resourceId,
-      details,
+      oldValues,
+      newValues,
     }: {
       action: string;
       resourceType: string;
       resourceId?: string;
-      details?: Json;
+      oldValues?: Json;
+      newValues?: Json;
     }) => {
       if (!user) return;
 
-      const { error } = await supabase.from("audit_logs").insert([{
+      const { error } = await supabase.from("audit_logs" as never).insert([{
         user_id: user.id,
         action,
         resource_type: resourceType,
         resource_id: resourceId || null,
-        details: details || {},
+        old_values: oldValues || null,
+        new_values: newValues || null,
         user_agent: navigator.userAgent,
-      }]);
+      }] as never);
 
       if (error) throw error;
     },
