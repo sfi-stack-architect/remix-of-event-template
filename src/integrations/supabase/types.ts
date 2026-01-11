@@ -10,171 +10,119 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "13.0.5"
+    PostgrestVersion: "14.1"
   }
   public: {
     Tables: {
-      audit_logs: {
+      event_registrations: {
         Row: {
-          action: string
-          created_at: string
-          details: Json | null
+          event_id: string
           id: string
-          ip_address: string | null
-          resource_id: string | null
-          resource_type: string
-          user_agent: string | null
-          user_id: string | null
-        }
-        Insert: {
-          action: string
-          created_at?: string
-          details?: Json | null
-          id?: string
-          ip_address?: string | null
-          resource_id?: string | null
-          resource_type: string
-          user_agent?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          action?: string
-          created_at?: string
-          details?: Json | null
-          id?: string
-          ip_address?: string | null
-          resource_id?: string | null
-          resource_type?: string
-          user_agent?: string | null
-          user_id?: string | null
-        }
-        Relationships: []
-      }
-      contact_inquiries: {
-        Row: {
-          created_at: string
-          email: string
-          id: string
-          inquiry: string
-          name: string
-          organization: string | null
-          role: string | null
-          status: string
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          email: string
-          id?: string
-          inquiry: string
-          name: string
-          organization?: string | null
-          role?: string | null
-          status?: string
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          email?: string
-          id?: string
-          inquiry?: string
-          name?: string
-          organization?: string | null
-          role?: string | null
-          status?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      notifications: {
-        Row: {
-          action_url: string | null
-          created_at: string
-          id: string
-          is_read: boolean
-          message: string
-          title: string
-          type: string
+          registered_at: string
           user_id: string
         }
         Insert: {
-          action_url?: string | null
-          created_at?: string
+          event_id: string
           id?: string
-          is_read?: boolean
-          message: string
-          title: string
-          type?: string
+          registered_at?: string
           user_id: string
         }
         Update: {
-          action_url?: string | null
-          created_at?: string
+          event_id?: string
           id?: string
-          is_read?: boolean
-          message?: string
-          title?: string
-          type?: string
+          registered_at?: string
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "event_registrations_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
       }
-      payments: {
+      events: {
         Row: {
-          amount: number
-          created_at: string
-          currency: string
+          address: string
+          background_image_url: string
+          created_by: string
+          creator: string
+          date: string
+          description: string
           id: string
-          metadata: Json | null
-          status: string
-          stripe_customer_id: string | null
-          stripe_payment_id: string
-          updated_at: string
+          target_date: string
+          time: string
+          title: string
         }
         Insert: {
-          amount: number
-          created_at?: string
-          currency?: string
+          address: string
+          background_image_url: string
+          created_by?: string
+          creator: string
+          date: string
+          description: string
           id?: string
-          metadata?: Json | null
-          status?: string
-          stripe_customer_id?: string | null
-          stripe_payment_id: string
-          updated_at?: string
+          target_date: string
+          time: string
+          title: string
         }
         Update: {
-          amount?: number
-          created_at?: string
-          currency?: string
+          address?: string
+          background_image_url?: string
+          created_by?: string
+          creator?: string
+          date?: string
+          description?: string
           id?: string
-          metadata?: Json | null
-          status?: string
-          stripe_customer_id?: string | null
-          stripe_payment_id?: string
+          target_date?: string
+          time?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          display_name: string | null
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          display_name?: string | null
+          id?: string
           updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
       user_roles: {
         Row: {
-          created_at: string
+          created_at: string | null
           id: string
           role: Database["public"]["Enums"]["app_role"]
-          updated_at: string
           user_id: string
         }
         Insert: {
-          created_at?: string
+          created_at?: string | null
           id?: string
-          role?: Database["public"]["Enums"]["app_role"]
-          updated_at?: string
+          role: Database["public"]["Enums"]["app_role"]
           user_id: string
         }
         Update: {
-          created_at?: string
+          created_at?: string | null
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
-          updated_at?: string
           user_id?: string
         }
         Relationships: []
@@ -191,19 +139,9 @@ export type Database = {
         }
         Returns: boolean
       }
-      is_admin: { Args: { _user_id: string }; Returns: boolean }
-      log_audit: {
-        Args: {
-          p_action: string
-          p_details?: Json
-          p_resource_id?: string
-          p_resource_type: string
-        }
-        Returns: string
-      }
     }
     Enums: {
-      app_role: "admin" | "analyst" | "viewer"
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -331,7 +269,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "analyst", "viewer"],
+      app_role: ["admin", "user"],
     },
   },
 } as const
